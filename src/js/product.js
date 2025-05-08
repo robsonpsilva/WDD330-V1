@@ -25,6 +25,16 @@ function addProductToCart(product) {
   setLocalStorage("so-cart", cart);
 }
 
+function getLocalStorage(key) {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? null : JSON.parse(value);
+  } catch (error) {
+    console.error("Error reading from localStorage:", error);
+    return null;
+  }
+}
+
 // add to cart button event handler
 async function addToCartHandler(e) {
   const product = await dataSource.findProductById(e.target.dataset.id);
