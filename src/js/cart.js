@@ -1,10 +1,22 @@
 import { getLocalStorage } from "./utils.mjs";
 
+
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  let htmlItems = []; // Inicializa como um array vazio por padrão
+
+  if (cartItems && Array.isArray(cartItems)) {
+    htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  } else {
+    // O carrinho está vazio ou não é um array
+    document.querySelector(".product-list").innerHTML = "<p>The car is empty.</p>";
+    // Ou você pode deixar o conteúdo vazio, dependendo do seu design.
+    // document.querySelector(".product-list").innerHTML = "";
+  }
 }
+
+
 
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
