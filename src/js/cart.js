@@ -2,17 +2,36 @@ import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
+
   let htmlItems = []; // Inicializa como um array vazio por padrão
 
   if (cartItems && Array.isArray(cartItems)) {
     htmlItems = cartItems.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
+    const totalListPrice = setTotal(cartItems);
+    document.querySelector(".cart-total").textContent = `Total: ${totalListPrice}`;
+    toggleHide();
   } else {
-    // O carrinho está vazio ou não é um array
+
     document.querySelector(".product-list").innerHTML =
       "<p>The car is empty.</p>";
-    // Ou você pode deixar o conteúdo vazio, dependendo do seu design.
-    // document.querySelector(".product-list").innerHTML = "";
+  }
+}
+
+function setTotal(itens){
+  let total = 0;
+  for (const item of itens) {
+    if (item && typeof item.ListPrice === "number") {
+      total += item.ListPrice;
+    }
+  }
+  return total;
+}
+
+function toggleHide() {
+  const cartFooter = document.querySelector(".cart-footer");
+  if (cartFooter) {
+    cartFooter.classList.toggle("hide");
   }
 }
 

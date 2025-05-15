@@ -40,6 +40,10 @@ p {
   padding: 0.75rem;
 }
 
+.hide {
+  display: none;
+}
+
 .logo {
   line-height: 60px;
   width: 245px;
